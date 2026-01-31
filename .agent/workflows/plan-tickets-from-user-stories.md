@@ -5,7 +5,7 @@ description: tickets.md generator from user-stories.md
 # 0. STRICT ADHERENCE TO CONSTITUTION (MANDATORY)
 You MUST load and strictly adhere to the rules and guidelines defined in the @/.agent/rules directory.
 - **Product & Ticket Rules**: @/.agent/rules/product-specs.md (Source of Truth for Ticket IDs, Types, and Slicing).
-- **Architecture**: @/.agent/rules/Arquitectura.md.
+- **Architecture**: @/.agent/rules/architecture.md.
 - **Tech Stack**: @/.agent/rules/techstack-backend.md & @/.agent/rules/techstack-frontend.md.
 
 Any deviation from these rules is strictly forbidden.
@@ -70,7 +70,10 @@ repeat for all stories.
    - Ensure ID format: `<STORY_ID>-<TYPE>-T<NN>`.
    - Ensure Traceability to Gherkin scenarios.
 3. **Embed NFRs**: Security, Performance, A11y as defined in the rules.
-4. **Output**: Single Markdown file.
+4. **Prepare Output Directory**:
+   - Verify if the target directory (e.g., `specs/features/[feature-slug]/`) exists.
+   - If not, create it explicitly before saving the file.
+5. **Output**: Single Markdown file.
 
 # JOURNALING PROTOCOL (MANDATORY)
 Upon successful completion, append to @/specs/progress.md:

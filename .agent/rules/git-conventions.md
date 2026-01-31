@@ -1,5 +1,5 @@
 ---
-trigger: model_decision
+trigger: always_on
 description: Git branching strategy, commit conventions, and development workflow. Use when performing git operations.
 ---
 
@@ -42,11 +42,11 @@ The following cycle **MUST** be followed for every task:
     - `doc/`: Documentation updates
 
 ### Commit Messages
-- **Format**: `type: (TICKET_ID) description`
-- **Types**: `feat`, `fix`, `refactor`, `doc`, `chore`, `test`
+- **Format**: `type: (TICKET_ID) description` 
+- **Types**: `feat`, `fix`, `refactor`, `doc`
 - **Rules**:
     - TICKET_ID is MANDATORY (e.g., `INC-001`). Use `NONE` if no ticket exists.
     - Use present tense ("add" not "added").
 - **Example**:
-    - `feat: (UM-001) agrega formulario de registro con validación`
-    - `fix: (BUG-42) corrige error de login en navbar`
+    - `feat: (UM-001) aggregate register form with validation`
+    - `fix: (BUG-42) fix login error in navbar`

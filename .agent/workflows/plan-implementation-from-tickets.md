@@ -1,9 +1,12 @@
 ---
-description: 
+description: Generates a detailed implementation plan (plan_TICKET_ID.md) from a ticket, ensuring adherence to all project rules and skills.
 ---
 
-# 0. STRICT ADHERENCE TO CONSTITUTION (MANDATORY)
-You MUST load and strictly adhere to the rules and guidelines defined in the @/.agent/rules directory. These rules effectively operate as a logical linter. Any deviation from these rules is strictly forbidden.
+# 0. COMPREHENSIVE CONTEXT & CONSTITUTION ADHERENCE (MANDATORY)
+You MUST perform a deep discovery of the `.agent/` directory before generating the plan:
+1. **Rules**: Strictly adhere to all rules in `@/.agent/rules/`. They operate as a logical linter; any deviation is forbidden. **Pay special attention to `brand-guidelines.md` for any frontend work.**
+2. **Skills**: Identify and read all relevant skills in `@/.agent/skills/` (e.g., `frontend-design`, `brand-identity`, `backend-testing`). You MUST integrate the specific "know-how" and constraints of these skills into the implementation steps.
+3. **Internal consistency & Connectivity**: Ensure the plan is consistent with the project's current state. For frontend work, you MUST explicitly plan how the new UI connects to existing routes and components (e.g., navigation, redirects).
 
 # Rol
 You are a senior technical planner with deep expertise in databases, backend, frontend, TDD, and BDD. 
@@ -41,8 +44,8 @@ Produce a single Markdown file per ticket named exactly:
 - Embed **traceability** to the ticket and user story.
 - Specify measurable NFR hooks (security, performance, a11y, i18n, observability) where applicable.
 - Require documentation updates after coding:
-  1) **@/.agent/rules/ModeloDatos.md** (data model, entities/tables, constraints, Mermaid ER diagram).  
-  2) **@/.agent/rules/Arquitectura.md** (high-level architecture, Clean/Hexagonal layers, auth/authorization, C4/Component Mermaid diagram with User Management).
+  1) **@/specs/DataModel.md** (data model, entities/tables, constraints, Mermaid ER diagram).  
+  2) **@/specs/ArchitecturalModel.md** (high-level architecture, Clean/Hexagonal layers, auth/authorization, C4/Component diagram in PlantUML).
 
 When updating docs, **integrate without deleting or contradicting** existing content: add sections, extend lists, keep a coherent structure.
 
@@ -73,6 +76,7 @@ Your response must be **only** the full content of this plan file, in English, w
 
 ## 3) Detailed Work Plan (TDD + BDD)
 > Follow **Red → Green → Refactor**. For each step, cite the **scenario titles/tags** from the story.
+> **Container Check**: Ensure a distinct `docker-compose.yml` exists for this project (separate from other projects). If missing, generate it immediately. Verify the environment is ready (`docker compose up -d` & health checks) before proceeding. If unreachable, stop.
 
 ### 3.1 Test-first sequencing
 1. **Define/Update tests**  
@@ -86,6 +90,8 @@ Your response must be **only** the full content of this plan file, in English, w
 - **Security/Privacy**: RBAC/ABAC checks, least privilege, auditing, PII minimization, encryption in transit/at rest.  
 - **Performance/Resilience**: P95 latencies, timeouts/retries/backoff, circuit breakers, idempotency.  
 - **Accessibility & i18n** (FE): WCAG target, keyboard navigation, ARIA roles, locale formats.  
+- **Brand & Visuals** (FE): Explicitly list colors, spacing, and typography tokens from `@/.agent/rules/brand-guidelines.md` or `@/.agent/skills/brand-identity`.
+- **Connectivity & Routing** (FE): Define entry points (how to get to this screen) and exit points (where to go next).
 - **Observability**: structured logs, metrics, traces, alerts (coverage and thresholds).
 
 ## 4) Atomic Task Breakdown
@@ -95,6 +101,7 @@ For each task use the template below. Add as many tasks as needed to fulfill the
 
 ### Task N: <Concise Title>
 - **Purpose**: What and why (tie to `<TICKET_ID>` and scenario names/tags).
+- **Prerequisites**: (If DB/Service required) Verify `docker-compose.yml` exists and containers are healthy (`docker compose ps`). Stop if not.
 - **Artifacts impacted**: Tables/entities, repositories, services, endpoints, components, routes, copies/i18n keys, etc.
 - **Test types**: Unit | Integration | End-to-End | Accessibility (as applicable).
 - **BDD Acceptance (Given–When–Then)**:

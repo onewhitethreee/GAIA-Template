@@ -17,7 +17,7 @@ You **must not** invent requirements beyond those sources.
 
 You **must**:
 - Mark the ticket as **COMPLETED** in the `tickets.md` associated with the plan once implementation is done.
-- Update @/.agent/rules/ModeloDatos.md and @/.agent/rules/Arquitectura.md to reflect any data-model or architectural changes introduced.
+- Update `@/specs/DataModel.md` and `@/specs/ArchitecturalModel.md` to reflect any data-model or architectural changes introduced (create them if they do not exist).
 - Keep specs, rules, and code aligned (avoid spec-code drift).
 
 ---
@@ -58,17 +58,19 @@ F.2) Record progress
 G) Final Summary to the User
 
 Commands must be **explicit, concise, and phase-driven**, not open-ended.
+You MUST verify the current branch and status at the start of ANY session using `git status` and `git branch`.
 
 ---
 
-### 2.1) Phase 0 — Git Initialization (Smart Context Check)
+### 2.1) Phase 0 — Git Initialization (Strict Protocol)
 
-1. **Check Current State**: Run `git branch --show-current`.
-2. **Conditional Logic**:
-   - **CASE A (Already on correct branch)**: If the current branch matches the target `feat/<ticket>` or `fix/<ticket>`, just `git pull origin <current-branch>` to ensure freshness. DO NOT checkout develop.
-   - **CASE B (Starting clean)**: If on `develop` or unrelated branch:
+1. **Mandatory Check**: Run `git status` and `git branch --show-current`. You MUST provide this output to the user.
+2. **Protocol Adherence**: Follow `@/.agent/rules/git-conventions.md` strictly.
+3. **Conditional Logic**:
+   - **CASE A (Correct branch)**: `git pull origin <current-branch>`.
+   - **CASE B (Starting clean)**: 
      - `git checkout develop && git pull origin develop`
-     - `git checkout -b <branch-name>` (follow `git-conventions.md`).
+     - `git checkout -b <prefix>/<ticket-id-lowercase>`
 
 ---
 
@@ -87,6 +89,9 @@ Commands must be **explicit, concise, and phase-driven**, not open-ended.
    - Locate plan-mentioned modules
    - Identify reusable abstractions/patterns/naming
    - Find existing tests covering impacted behaviour
+4. **Brand & Connectivity Check (FE Mandatory)**:
+   - If the plan involves frontend work, you **MUST** read `@/.agent/rules/brand-guidelines.md` and `@/.agent/skills/brand-identity` skill.
+   - Verify that the plan includes tasks for connecting the new UI with existing flows (routing/navigation). If not, stop and ask for clarification.
 
 If plan/rules are ambiguous:
 - Ask the user for clarification **once** (group questions).
@@ -120,6 +125,7 @@ Implement strictly **task by task** using a TDD-oriented loop. For each task:
    - Keep tests deterministic; reuse existing test utilities/patterns
 3. Run tests and observe failure for the right reason (when feasible).
 4. Implement production code:
+   - **Directory Creation**: If the code belongs to a new path, ensure the directory structure exists before creating the file.
    - Touch only modules required by the task
    - Reuse existing abstractions/services/repositories/DTOs/helpers when possible
    - Respect layer boundaries (domain/application/infrastructure, etc.)
@@ -145,6 +151,9 @@ After all plan tasks are done:
    - No obvious security regressions (authn/authz hooks, input validation)
    - No obvious performance regressions (avoid N+1, unnecessary loops)
    - Logging/observability follows project patterns
+4. **UI/UX & Integration Check (FE Mandatory)**:
+   - Verify that the implemented UI exactly matches the colors, spacing, and typography tokens from `brand-guidelines.md`.
+   - Verify that the new UI is **reachable** from existing screens and leads to the **expected next steps** (no dead ends).
 
 ---
 
@@ -206,34 +215,41 @@ After the code and tests are in place:
 #### 8.2 Architecture & data model docs
 
 If you introduced any changes to:
-
-- The system’s **architecture**, or
+- The system’s **architecture** (new components, containers, or context changes), or
 - The **data model** (entities, tables, relationships, fields),
 
 you **MUST**:
-
-- Update @/.agent/rules/Arquitectura.md to reflect architectural changes (new components, layers, interactions).
-- Update @/.agent/rules/ModeloDatos.md to reflect data model changes (new entities, fields, relationships).
-- Ensure the documentation reflects the **current state** of the codebase to reduce “spec debt”.
-
----
-
-#### 8.3 Rules / .agent updates
-
-If your changes imply updates to any @/.agent/rules or similar system rule files:
-
-- Call this out explicitly in your summary.
-- Apply the corresponding update to keep the Memory Bank / Constitution consistent with the code.
+- Update or create `@/specs/DataModel.md` with the updated Entity-Relationship diagram (Mermaid or PlantUML).
+- Update or create `@/specs/ArchitecturalModel.md` containing the **C4 System Context** and **Component** diagrams in **PlantUML** format.
+- Ensure the documentation in `specs/` reflects the **current state** of the codebase to reduce “spec debt”.
+- **DO NOT** update `@/.agent/rules/architecture.md` with application-specific details; that file must remain a generic guide for layers and patterns.
 
 ---
-### 9. Phase F.1 - Git Finalization
 
-Before moving to progress recording, you MUST commit your changes:
+#### 8.3 Governance of .agent Artifacts (Rules, Skills, Workflows)
 
+You **MUST NOT** modify any file in `.agent/rules`, `.agent/skills`, or `.agent/workflows` **UNLESS ALL** of the following conditions are met:
+
+1.  **Explicit Authorization**: The user has explicitly authorized the update or you have asked for permission and received it.
+2.  **Ambiguity or Gap**: The update resolves a proven ambiguity or fills a missing *generic* instruction that applies to *any* project with this tech stack.
+3.  **Reusable**: The update contains **NO** application-specific logic (e.g., specific entities, business rules, or project names). Rules, Skills, and Workflows must remain reusable templates.
+4.  **Correct Location**: Application-specific documentation MUST go into `specs/` (e.g., `specs/features`, `specs/PRD.md`), NOT in `.agent/`.
+
+**If you detect a need to update these artifacts:**
+1.  Propose the change in your summary.
+2.  Explain *why* it is necessary (ambiguity, gap) and *how* it remains generic.
+3.  Wait for user approval before applying.
+
+---
+### 9. Phase F.1 - Git Finalization (Strict)
+
+Before moving to progress recording, you MUST commit your changes following the protocol.
+
+1.  **Validation**: Verify that the commit message matches `@/.agent/rules/git-conventions.md`.
 // turbo
-1.  **Stage**: `git add .`
-2.  **Commit**: `git commit -m "<type>: (<ticket-id>) <concise description of changes>"` (Follow @/.agent/rules/git-conventions.md).
-3.  **Push**: `git push origin feat/<ticket-id>` (or your branch name).
+2.  **Stage**: `git add .`
+3.  **Commit**: `git commit -m "<type>: (<ticket-id>) <concise description of changes>"`
+4.  **Push**: `git push origin <branch-name>`
 
 ---
 ### 10. Phase F.2 - Record progress
@@ -286,6 +302,7 @@ You **must NOT**:
 - Omit traceability comments on relevant code blocks.
 - Create new code where equivalent code already exists and can be reused.
 - Modify `plan_<ticket-id>.md` in this workflow (plans are authored/updated in a different phase of the SDD lifecycle).
-- Forget to update modelo-datos.md or architecture.md if changes to the data model or the app architecture have been performed as a consequence of implementing the current plan. 
+- Pollute `@/.agent/rules/` artifacts with application-specific rules or models (use `specs/` instead).
+- Modify any file in `@/.agent/` (Rules, Skills, Workflows) without explicit user authorization and a valid reason (fixing ambiguity/generic gap). 
 - Forget to update @/specs/progress.md 
 - Forget to mark the task as COMPLETED inside the corresponding file tickets.md after generating the code.  
