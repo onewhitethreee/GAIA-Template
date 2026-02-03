@@ -70,3 +70,17 @@
 - frontend/src/app/providers/ThemeContext.tsx
 - frontend/src/main.tsx
   **Notes**: Implemented ThemeContext and Provider with LocalStorage persistence. Integrated in main.tsx. Unit tests created but failed execution due to environment Node version mismatch (v20.17 vs required v20.19+ for jsdom). Build verified.
+
+**Date**: 2026-02-03
+**Milestone**: Generated Implementation Plan DM-USER-001-FE-T02 (workflow: /plan-implementation-from-tickets)
+**Artifacts**:
+
+- specs/features/dark-mode/plan_DM-USER-001-FE-T02.md
+
+**Date**: 2026-02-03
+**Milestone**: Executed plan DM-USER-001-FE-T02 (workflow: /execute-plan)
+**Artifacts**:
+
+- frontend/src/features/dark-mode/components/ThemeToggle.tsx
+- frontend/src/features/task-management/components/TaskLayout.tsx
+  **Notes**: Created ThemeToggle component with Sun/Moon icons, accessibility labels, and integrated it into the TaskLayout header. Build verified.
