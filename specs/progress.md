@@ -43,3 +43,10 @@
 
 - specs/features/dark-mode/feature-descr.md
 - specs/PRD.md
+
+**Date**: 2026-02-03
+**Milestone**: Generated User Stories for Dark Mode (workflow: /plan-user-stories-from-features)
+**Artifacts**:
+
+- specs/features/dark-mode/user-stories.md
+- specs/UserStories.md
