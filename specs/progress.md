@@ -84,3 +84,16 @@
 - frontend/src/features/dark-mode/components/ThemeToggle.tsx
 - frontend/src/features/task-management/components/TaskLayout.tsx
   **Notes**: Created ThemeToggle component with Sun/Moon icons, accessibility labels, and integrated it into the TaskLayout header. Build verified.
+
+**Date**: 2026-02-03
+**Milestone**: Generated Implementation Plan DM-USER-002-FE-T01 (workflow: /plan-implementation-from-tickets)
+**Artifacts**:
+
+- specs/features/dark-mode/plan_DM-USER-002-FE-T01.md
+
+**Date**: 2026-02-03
+**Milestone**: Executed plan DM-USER-002-FE-T01 (workflow: /execute-plan)
+**Artifacts**:
+
+- frontend/src/app/providers/ThemeContext.tsx
+  **Notes**: Implemented automatic system theme detection and real-time transition listening. Manual overrides in LocalStorage still take precedence. Updated unit tests.
