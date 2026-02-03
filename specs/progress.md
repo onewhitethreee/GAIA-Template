@@ -50,3 +50,9 @@
 
 - specs/features/dark-mode/user-stories.md
 - specs/UserStories.md
+
+**Date**: 2026-02-03
+**Milestone**: Generated Tickets for Dark Mode (workflow: /plan-tickets-from-user-stories)
+**Artifacts**:
+
+- specs/features/dark-mode/tickets.md
