@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/features/dark-mode/components/ThemeToggle";
 export function TaskLayout() {
     return (
         <div className="min-h-screen bg-background font-sans antialiased">
-            <header className="border-b">
+            <header className="border-b border-border">
                 <div className="container mx-auto flex h-16 items-center justify-between px-4">
                     <h1 className="text-xl font-bold tracking-tight text-foreground">
                         Task Dashboard
